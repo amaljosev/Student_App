@@ -31,8 +31,10 @@ class ScreenHome extends StatelessWidget {
                                     File(value.students[index].profile)),
                               ),
                               title: Text(value.students[index].name),
+                              trailing: IconButton(onPressed: ()=>deleteStudent(context, index), icon: const Icon(Icons.delete)), 
                               onTap: () => navigateToProfile(context,index),
                             ),
+                            
                         separatorBuilder: (context, index) => const Divider(),
                         itemCount: value.students.length),
                   )
@@ -40,8 +42,9 @@ class ScreenHome extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => navigateToForm(context),
+      floatingActionButton: FloatingActionButton( 
+        backgroundColor: backgroundColor,  
+        onPressed: () => navigateToForm(context), 
         child: const Icon(Icons.add),
       ),
     );
@@ -62,4 +65,8 @@ void navigateToProfile(BuildContext context,int index) {
       builder: (context) =>  ScreenProfile(index:index ),
     ),
   );
+}
+deleteStudent(BuildContext context,int index){
+  final data = Provider.of<StudentData>(context, listen: false);
+  data.deleteStudent(index); 
 }
