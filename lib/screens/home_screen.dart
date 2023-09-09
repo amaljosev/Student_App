@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/constants.dart';
 import 'package:studentapp/screens/add/add_student.dart';
 import 'package:studentapp/screens/profile/screen_profile.dart';
-
 import '../core/provider/student_functions.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -31,8 +31,7 @@ class ScreenHome extends StatelessWidget {
                               ),
                               title: Text(value.students[index].name),
                               trailing: IconButton(
-                                  onPressed: () =>
-                                      deleteStudent(context, index),
+                                  onPressed: () => showDialog(context, index),
                                   icon: const Icon(Icons.delete)),
                               onTap: () => navigateToProfile(context, index),
                             ),
@@ -68,7 +67,15 @@ void navigateToProfile(BuildContext context, int index) {
   );
 }
 
-deleteStudent(BuildContext context, int index) {
-  final data = Provider.of<StudentData>(context, listen: false);
-  data.deleteStudent(index);
+void showDialog(BuildContext context, int index) {
+  Get.defaultDialog(
+      title: 'Are you sure!',
+      textCancel: 'Cancel',
+      textConfirm: 'Sure',
+      middleText: 'Realy want to delete this student? ',
+      onConfirm: () {
+        final data = Provider.of<StudentData>(context, listen: false);
+        data.deleteStudent(index);
+        Get.back();
+      });
 }
