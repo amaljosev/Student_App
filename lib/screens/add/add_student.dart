@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/constants.dart';
-import 'package:studentapp/core/provider/imageFunctions.dart';
+import 'package:studentapp/core/provider/image_functions.dart';
 import 'package:studentapp/models/student_model.dart';
 import 'package:studentapp/screens/add/widgets/student_photo.dart';
-
 import '../../core/provider/student_functions.dart';
+import 'package:get/get.dart';
 
 class ScreenAdd extends StatelessWidget {
   ScreenAdd({super.key});
@@ -149,8 +149,18 @@ class ScreenAdd extends StatelessWidget {
 
     data.addStudent(studentObject);
     value.imgPath = null;
+
     Navigator.of(context).pop();
   }
 
-  void isNotSuccess() {}
+  void isNotSuccess() {
+    Get.snackbar(
+      'Image not added',
+      'Please add a image',
+      backgroundColor: Colors.red.withOpacity(0.6),   
+      colorText: Colors.white,  
+       padding: const EdgeInsets.all(10),
+       margin: const EdgeInsets.only(top: 60,left: 10,right: 10),      
+    );
+  }
 }

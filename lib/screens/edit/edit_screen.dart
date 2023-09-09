@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:studentapp/core/provider/imageFunctions.dart';
+import 'package:studentapp/core/provider/image_functions.dart';
 import 'package:studentapp/core/provider/student_functions.dart';
 import 'package:studentapp/models/student_model.dart';
 import '../../core/constants.dart';
@@ -44,7 +45,8 @@ class ScreenEdit extends StatelessWidget {
                               onTap: () => getimage(value),
                               child: CircleAvatar(
                                 radius: 60,
-                                backgroundImage: FileImage(File(studentImageEdit)),
+                                backgroundImage:
+                                    FileImage(File(studentImageEdit)),
                               ),
                             )
                           : GestureDetector(
@@ -53,15 +55,21 @@ class ScreenEdit extends StatelessWidget {
                                 radius: 60,
                                 backgroundImage: FileImage(File(selectedImage)),
                               ),
-                            ); 
+                            );
                     }),
-                    const Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: CircleAvatar( 
-                          radius: 15,    
-                          child: Icon(Icons.add),
-                        )), 
+                    Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: Consumer<StudentImage>(
+                        builder: (context, value, child) => GestureDetector(
+                          onTap: () => getimage(value),
+                          child: const CircleAvatar(
+                            radius: 15,
+                            child: Icon(Icons.add),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -107,7 +115,7 @@ class ScreenEdit extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
-                      nameController.text.isEmpty ? 'Age field is empty' : null,
+                      ageController.text.isEmpty ? 'Age field is empty' : null,
                 ),
                 const SizedBox(
                   height: 5,
@@ -121,8 +129,8 @@ class ScreenEdit extends StatelessWidget {
                     hintText: 'Contact',
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) => nameController.text.isEmpty
-                      ? 'Name field is empty'
+                  validator: (value) => contactController.text.isEmpty
+                      ? 'Contact field is empty'
                       : null,
                 ),
                 const SizedBox(
@@ -132,16 +140,15 @@ class ScreenEdit extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Consumer<StudentImage>(
-                        builder: (context, value, child) => 
-                         ElevatedButton.icon(
+                        builder: (context, value, child) => ElevatedButton.icon(
                           onPressed: () {
-                            if (formKey.currentState!.validate())  {
-                             if (value.imgPath==null) {
-                               value.imgPath=studentImageEdit;
-                               isSuccess(index, context); 
-                             } else {
+                            if (formKey.currentState!.validate()) {
+                              if (value.imgPath == null) {
+                                value.imgPath = studentImageEdit;
                                 isSuccess(index, context);
-                             }
+                              } else {
+                                isSuccess(index, context);
+                              }
                             }
                           },
                           icon: const Icon(Icons.security_update_good_sharp),
@@ -188,19 +195,14 @@ void isSuccess(int index, BuildContext context) {
       age: int.parse(ageController.text.trim()),
       contact: int.parse(contactController.text.trim()));
   data.editStudent(index, studentObject);
+  img.imgPath = null;
+  Get.snackbar(
+    'Updated Successfully',
+    'Data saved',
+    backgroundColor: Colors.green.withOpacity(0.6),
+    colorText: Colors.white,
+    padding: const EdgeInsets.all(10),
+    margin: const EdgeInsets.only(top: 60, left: 10, right: 10),
+  );
   Navigator.of(context).pop();
 }
-
-// void isFailed(int index, BuildContext context) {
-//   final img = Provider.of<StudentImage>(context, listen: false); 
-//   final data = Provider.of<StudentData>(context, listen: false);
-//   final studentObject = StudentModel(
-//       id: DateTime.now(),
-//       profile: img.imgPath!,
-//       name: nameController.text.trim(),
-//       email: mailController.text.trim(),
-//       age: int.parse(ageController.text.trim()),
-//       contact: int.parse(contactController.text.trim()));
-//   data.editStudent(index, studentObject);
-//   Navigator.of(context).pop();
-// }

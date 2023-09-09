@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/provider/imageFunctions.dart';
+import '../../../core/provider/image_functions.dart';
 
 class StudentPhoto extends StatelessWidget {
   const StudentPhoto({
@@ -22,26 +22,31 @@ class StudentPhoto extends StatelessWidget {
                     onTap: () => getimage(imageProvider),
                     child: const CircleAvatar(
                       radius: 80,
-                      backgroundImage:
-                          AssetImage('lib/assests/avatar.png'),
+                      backgroundImage: AssetImage('lib/assests/avatar.png'),
                     ),
                   )
                 : GestureDetector(
                     onTap: () => getimage(imageProvider),
                     child: CircleAvatar(
                       radius: 80,
-                      backgroundImage:
-                          FileImage(File(selectedImage)),
+                      backgroundImage: FileImage(File(selectedImage)),
                     ),
                   );
           },
+        ), 
+        Positioned(
+          bottom: 5,
+          right: 5,
+          child: Consumer<StudentImage>(
+            builder: (context, value, child) => GestureDetector(
+              onTap: () => getimage(value),
+              child: const CircleAvatar( 
+                radius: 20,
+                child: Icon(Icons.add),
+              ),
+            ),
+          ),
         ),
-        const Positioned(
-            bottom: 5,
-            right: 5,
-            child: CircleAvatar(
-              child: Icon(Icons.add),
-            )),
       ],
     );
   }

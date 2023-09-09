@@ -10,7 +10,7 @@ class StudentImage with ChangeNotifier {
     if (image == null) {
       return;
     }
-    final selectedImage = File(image.path);
+    final selectedImage = File(image.path); 
     imgPath = selectedImage.path;
     notifyListeners();
   }
