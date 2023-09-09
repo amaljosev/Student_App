@@ -2,11 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/constants.dart';
-import 'package:studentapp/screens/add_student.dart';
-import 'package:studentapp/screens/screen_profile.dart';
+import 'package:studentapp/screens/add/add_student.dart';
+import 'package:studentapp/screens/profile/screen_profile.dart';
 
 import '../core/provider/student_functions.dart';
-
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -31,10 +30,12 @@ class ScreenHome extends StatelessWidget {
                                     File(value.students[index].profile)),
                               ),
                               title: Text(value.students[index].name),
-                              trailing: IconButton(onPressed: ()=>deleteStudent(context, index), icon: const Icon(Icons.delete)), 
-                              onTap: () => navigateToProfile(context,index),
+                              trailing: IconButton(
+                                  onPressed: () =>
+                                      deleteStudent(context, index),
+                                  icon: const Icon(Icons.delete)),
+                              onTap: () => navigateToProfile(context, index),
                             ),
-                            
                         separatorBuilder: (context, index) => const Divider(),
                         itemCount: value.students.length),
                   )
@@ -42,9 +43,9 @@ class ScreenHome extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton( 
-        backgroundColor: backgroundColor,  
-        onPressed: () => navigateToForm(context), 
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: backgroundColor,
+        onPressed: () => navigateToForm(context),
         child: const Icon(Icons.add),
       ),
     );
@@ -59,14 +60,15 @@ void navigateToForm(BuildContext context) {
   );
 }
 
-void navigateToProfile(BuildContext context,int index) {
+void navigateToProfile(BuildContext context, int index) {
   Navigator.of(context).push(
     MaterialPageRoute(
-      builder: (context) =>  ScreenProfile(index:index ),
+      builder: (context) => ScreenProfile(index: index),
     ),
   );
 }
-deleteStudent(BuildContext context,int index){
+
+deleteStudent(BuildContext context, int index) {
   final data = Provider.of<StudentData>(context, listen: false);
-  data.deleteStudent(index); 
+  data.deleteStudent(index);
 }

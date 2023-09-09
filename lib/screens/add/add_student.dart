@@ -1,15 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/constants.dart';
 import 'package:studentapp/core/provider/imageFunctions.dart';
 import 'package:studentapp/models/student_model.dart';
+import 'package:studentapp/screens/add/widgets/student_photo.dart';
 
-import '../core/provider/student_functions.dart';
-
-
-
-
+import '../../core/provider/student_functions.dart';
 
 class ScreenAdd extends StatelessWidget {
   ScreenAdd({super.key});
@@ -40,27 +36,7 @@ class ScreenAdd extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Consumer<StudentImage>(
-                  builder: (context, imageProvider, child) {
-                    final selectedImage = imageProvider.imgPath;
-                    return selectedImage == null
-                        ? GestureDetector(
-                            onTap: () => getimage(imageProvider),
-                            child: const CircleAvatar(
-                              radius: 80,  
-                              backgroundImage:
-                                  AssetImage('lib/assests/avatar.png'),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: () => getimage(imageProvider),
-                            child: CircleAvatar(
-                              radius: 80, 
-                              backgroundImage: FileImage(File(selectedImage)),
-                            ),
-                          );
-                  },
-                ),
+                const StudentPhoto(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -77,7 +53,7 @@ class ScreenAdd extends StatelessWidget {
                       : null,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
@@ -92,7 +68,7 @@ class ScreenAdd extends StatelessWidget {
                       : null,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
@@ -119,11 +95,11 @@ class ScreenAdd extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) => nameController.text.isEmpty
-                      ? 'Name field is empty'
+                      ? 'Contact field is empty'
                       : null,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Consumer<StudentImage>(
                   builder: (context, value, child) => Consumer<StudentData>(
@@ -172,13 +148,9 @@ class ScreenAdd extends StatelessWidget {
     );
 
     data.addStudent(studentObject);
-    value.imgPath=null;
+    value.imgPath = null;
     Navigator.of(context).pop();
   }
 
   void isNotSuccess() {}
-}
-
-getimage(StudentImage value) async {
-  await value.getImage(); 
 }

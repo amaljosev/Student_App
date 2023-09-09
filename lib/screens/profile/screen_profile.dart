@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/provider/student_functions.dart';
-import 'package:studentapp/screens/edit_screen.dart';
-import '../core/constants.dart';
+import 'package:studentapp/screens/edit/edit_screen.dart';
+import '../../core/constants.dart';
 int? student;
 class ScreenProfile extends StatelessWidget {
   const ScreenProfile({Key? key, required this.index}) : super(key: key);
@@ -54,7 +54,7 @@ class ScreenProfile extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(
+                      Text( 
                         'AGE : ${value.students[index].age}',
                         style: dataStyle,
                       ),
@@ -68,7 +68,7 @@ class ScreenProfile extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+              ), 
             ),
             ElevatedButton.icon(
                 onPressed: () =>navigateToedit(context,student),

@@ -6,7 +6,6 @@ import 'core/provider/imageFunctions.dart';
 import 'core/provider/student_functions.dart';
 import 'models/student_model.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-
         ChangeNotifierProvider(
           create: (context) => StudentImage(),
         ),
@@ -32,7 +30,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade800),
         ),
         debugShowCheckedModeBanner: false,
         home: const ScreenHome(),

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:studentapp/core/provider/imageFunctions.dart';
 import 'package:studentapp/core/provider/student_functions.dart';
 import 'package:studentapp/models/student_model.dart';
-import '../core/constants.dart';
+import '../../core/constants.dart';
 
 final formKey = GlobalKey<FormState>();
 TextEditingController nameController = TextEditingController();
@@ -35,24 +35,35 @@ class ScreenEdit extends StatelessWidget {
             padding: const EdgeInsets.all(18.0),
             child: Column(
               children: [
-                Consumer<StudentImage>(builder: (context, value, child) {
-                  final selectedImage = value.imgPath;
-                  return selectedImage == null
-                      ? GestureDetector(
-                          onTap: () => getimage(value),
-                          child: CircleAvatar(
-                            radius: 60,
-                            backgroundImage: FileImage(File(studentImageEdit)),
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () => getimage(value),
-                          child: CircleAvatar(
-                            radius: 60,
-                            backgroundImage: FileImage(File(selectedImage)),
-                          ),
-                        );
-                }),
+                Stack(
+                  children: [
+                    Consumer<StudentImage>(builder: (context, value, child) {
+                      final selectedImage = value.imgPath;
+                      return selectedImage == null
+                          ? GestureDetector(
+                              onTap: () => getimage(value),
+                              child: CircleAvatar(
+                                radius: 60,
+                                backgroundImage: FileImage(File(studentImageEdit)),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () => getimage(value),
+                              child: CircleAvatar(
+                                radius: 60,
+                                backgroundImage: FileImage(File(selectedImage)),
+                              ),
+                            ); 
+                    }),
+                    const Positioned(
+                        bottom: 5,
+                        right: 5,
+                        child: CircleAvatar( 
+                          radius: 15,    
+                          child: Icon(Icons.add),
+                        )), 
+                  ],
+                ),
                 const SizedBox(
                   height: 30,
                 ),
