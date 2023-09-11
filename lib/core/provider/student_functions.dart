@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 import '../../models/student_model.dart';
 
-class StudentData extends ChangeNotifier {
+class StudentData extends ChangeNotifier { 
   List<StudentModel> students = [];
 
   Future<void> addStudent(StudentModel student) async {

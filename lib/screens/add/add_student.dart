@@ -149,7 +149,7 @@ class ScreenAdd extends StatelessWidget {
 
     data.addStudent(studentObject);
     value.imgPath = null;
-
+   
     Navigator.of(context).pop();
   }
 
