@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:studentapp/core/constants.dart';
 import 'package:studentapp/screens/add/add_student.dart';
 import 'package:studentapp/screens/profile/screen_profile.dart';
+import 'package:studentapp/screens/widgets/search_screen.dart';
 import '../core/provider/student_functions.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -16,8 +17,14 @@ class ScreenHome extends StatelessWidget {
     studentProvider.getStudent();
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Students', style: titleStyle),
-          backgroundColor: backgroundColor),
+        title: const Text('Students', style: titleStyle),
+        backgroundColor: backgroundColor,
+        actions: [
+          IconButton(
+              onPressed: () => showSearch(context: context, delegate: Search()),
+              icon: const Icon(Icons.search)), 
+        ],
+      ),
       body: Column(
         children: [
           Consumer<StudentData>(
