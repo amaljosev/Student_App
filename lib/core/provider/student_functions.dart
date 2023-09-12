@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
 import '../../models/student_model.dart';
 
 class StudentData extends ChangeNotifier { 

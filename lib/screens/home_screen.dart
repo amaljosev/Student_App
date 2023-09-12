@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/constants.dart';
+import 'package:studentapp/core/provider/alerts.dart';
 import 'package:studentapp/screens/add/add_student.dart';
 import 'package:studentapp/screens/profile/screen_profile.dart';
-import 'package:studentapp/screens/widgets/search_screen.dart';
+import 'package:studentapp/screens/search/search_screen.dart';
 import '../core/provider/student_functions.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -22,7 +22,7 @@ class ScreenHome extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () => showSearch(context: context, delegate: Search()),
-              icon: const Icon(Icons.search)), 
+              icon: const Icon(Icons.search)),
         ],
       ),
       body: Column(
@@ -37,9 +37,12 @@ class ScreenHome extends StatelessWidget {
                                     File(value.students[index].profile)),
                               ),
                               title: Text(value.students[index].name),
-                              trailing: IconButton(
-                                  onPressed: () => showDialog(context, index),
-                                  icon: const Icon(Icons.delete)),
+                              trailing: Consumer<AlertProvider>(
+                                builder: (context, value, child) => IconButton(
+                                    onPressed: () =>
+                                        value.dialogBuilder(context, index),
+                                    icon: const Icon(Icons.delete)),
+                              ),
                               onTap: () => navigateToProfile(context, index),
                             ),
                         separatorBuilder: (context, index) => const Divider(),
@@ -72,17 +75,4 @@ void navigateToProfile(BuildContext context, int index) {
       builder: (context) => ScreenProfile(index: index),
     ),
   );
-}
-
-void showDialog(BuildContext context, int index) {
-  Get.defaultDialog(
-      title: 'Are you sure!',
-      textCancel: 'Cancel',
-      textConfirm: 'Sure',
-      middleText: 'Realy want to delete this student? ',
-      onConfirm: () {
-        final data = Provider.of<StudentData>(context, listen: false);
-        data.deleteStudent(index);
-        Get.back();
-      });
 }

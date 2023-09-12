@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/core/provider/image_functions.dart';
 import 'package:studentapp/core/provider/student_functions.dart';
 import 'package:studentapp/models/student_model.dart';
 import '../../core/constants.dart';
+import '../../core/provider/alerts.dart';
 
 final formKey = GlobalKey<FormState>();
 TextEditingController nameController = TextEditingController();
@@ -145,9 +145,9 @@ class ScreenEdit extends StatelessWidget {
                             if (formKey.currentState!.validate()) {
                               if (value.imgPath == null) {
                                 value.imgPath = studentImageEdit;
-                                isSuccess(index, context);
+                                update(index, context);
                               } else {
-                                isSuccess(index, context);
+                                update(index, context);
                               }
                             }
                           },
@@ -184,9 +184,10 @@ getimage(StudentImage value) async {
   await value.getImage();
 }
 
-void isSuccess(int index, BuildContext context) {
+void update(int index, BuildContext context) {
   final img = Provider.of<StudentImage>(context, listen: false);
   final data = Provider.of<StudentData>(context, listen: false);
+  final alert=Provider.of<AlertProvider>(context,listen: false); 
   final studentObject = StudentModel(
       id: DateTime.now(),
       profile: img.imgPath!,
@@ -196,13 +197,6 @@ void isSuccess(int index, BuildContext context) {
       contact: int.parse(contactController.text.trim()));
   data.editStudent(index, studentObject);
   img.imgPath = null;
-  Get.snackbar(
-    'Updated Successfully',
-    'Data saved',
-    backgroundColor: Colors.green.withOpacity(0.6),
-    colorText: Colors.white,
-    padding: const EdgeInsets.all(10),
-    margin: const EdgeInsets.only(top: 60, left: 10, right: 10),
-  );
+  alert.success(context); 
   Navigator.of(context).pop();
 }
